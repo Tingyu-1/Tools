@@ -221,6 +221,47 @@
 
     <!--访问量 | 流量趋势-->
     <VisiTab />
+
+    <!-- 本地工具工作台 -->
+    <div class="mt-4">
+      <n-card title="工具工作台" :bordered="false">
+        <n-grid cols="1 s:2 m:3" responsive="screen" :x-gap="12" :y-gap="12">
+          <n-gi>
+            <n-card size="small" hoverable>
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="text-lg">ADB 设备</div>
+                  <div class="mt-1 text-gray-400">设备发现、信息读取、日志和录屏</div>
+                </div>
+                <n-tag type="warning">待接入</n-tag>
+              </div>
+            </n-card>
+          </n-gi>
+          <n-gi>
+            <n-card size="small" hoverable>
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="text-lg">视频工具</div>
+                  <div class="mt-1 text-gray-400">本地视频读取、定位和后续分析</div>
+                </div>
+                <n-tag type="warning">待迁移</n-tag>
+              </div>
+            </n-card>
+          </n-gi>
+          <n-gi>
+            <n-card size="small" hoverable>
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="text-lg">本地服务</div>
+                  <div class="mt-1 text-gray-400">连接 web_tool 的 Node.js 服务</div>
+                </div>
+                <n-tag type="info">规划中</n-tag>
+              </div>
+            </n-card>
+          </n-gi>
+        </n-grid>
+      </n-card>
+    </div>
   </div>
 </template>
 <script lang="ts" setup>

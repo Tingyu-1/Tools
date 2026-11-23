@@ -1,160 +1,135 @@
-## 🚀 简介
+# Tools 工作台
 
-`Naive Ui Admin` 是一款 完全免费 且可商用的中后台解决方案，基于 🌟 `Vue3.x` 🌟、🚀 `Vite` 🚀、✨ [Naive UI](https://www.naiveui.com/) ✨ 和 🎉 `TypeScript` 🎉。
-它融合了最新的前端技术栈，提炼了典型的业务模型和页面，包括二次封装组件、动态菜单、权限校验等功能，助力快速搭建企业级中后台项目
+## 项目目标
 
-## 🌈 特性
-📦 二次封装的实用高扩展性组件
-🎨 响应式、多主题、多配置，快速集成，开箱即用
-🚀 强大的鉴权系统，支持 三种鉴权模式，满足多样业务需求
-🌐 持续更新的实用性页面模板和交互设计，简化页面构建
+基于 Naive UI Admin 建设本地使用的工作工具集合。项目优先服务于个人或团队日常研发效率，先快速实现清晰、可扩展的 UI，再逐步迁移 `D:\AI_Test\web_tool` 中现有的 ADB 设备控制和视频读取功能。桌面打包不是当前阻塞项，等主要功能稳定后再评估。
 
+## 页面布局设想
 
-## 🎥 预览
-- [naive-ui-admin](https://gratis.naiveadmin.com)
+沿用现有管理后台的侧边栏、顶部栏和内容区，不重新搭建整体框架。侧边栏按工具类别组织：
 
-账号：admin，密码：123456（随意）
+- 工作台：常用工具入口、最近任务或运行状态。
+- Android 工具：ADB 设备控制、设备信息、日志采集、录屏。
+- 视频工具：本地视频读取、时间点查看、截图或后续分析能力。
+- 设置：工具路径、输出目录和偏好设置。
 
+内容区遵循“一个工具一个页面”：顶部显示页面标题和当前状态；主体优先展示核心输入、设备选择和主要操作；结果、日志、错误信息放在操作区下方或右侧。涉及设备操作时，页面始终明确显示当前目标设备，危险操作必须二次确认。
 
-## 🚀 Naive Admin - 开箱即用的企业级前后端框架 `商业版本`
+## 功能迁移范围
 
-> **✨ 多版本选择 · 四年持续迭代**  
-> 配套前后端支持 Java/Php 语言，支持单体和微服务多租户架构  
-> [详情→官网](https://www.naiveadmin.com) | [更新日志](https://www.yuque.com/u5825/zaqu0e)
+### ADB 设备控制
 
----
+ADB 功能已迁移到本项目内的 `server.js`，当前调试设备为 `U4796TBE8LRCU8UW`（型号 `2602BRT18C`）。当前功能包括：
 
-## 🔥 为什么选择 NaiveAdmin 商业版？
-- **省时间**：内置丰富扩展组件与业务模板，不写一行样板代码即可开始业务开发
-- **经实战**：已落地电网、跨境 ERP、SaaS 等 30+ 场景 
-- **可扩展**：插件式菜单 / 按钮 / 数据权限，新增业务模块「0 侵入」
+- 发现、刷新和选择已连接设备。
+- 显示设备序列号、型号和连接状态。
+- 读取设备信息并执行常用 ADB 操作。
+- 执行受限自定义 ADB 命令，并显示独立的设备信息与操作日志。
+- 截取屏幕，按设备序列号和时间戳保存图片。
+- 开始/停止录屏，自动唤醒设备，等待 MP4 正常封装后再拉取。
+- 保存设备 `DCIM/ScreenRecorder` 目录中最近的视频。
+- 触发 MIUI 284 日志生成，并单独保存设备端最新 ZIP/TGZ 日志。
+- 设备信息按字段展示，每行支持复制；截图和视频支持预览及文件操作。
 
----
+每项设备操作都必须绑定明确的序列号，避免多设备时误操作。Fastboot、重启等可能中断连接的操作应提供确认提示。
 
-## 🖥️ 纯前端版本
+### 视频工具
 
-| 版本 | 技术栈 | 配套后端 | 预览地址 |
-|-----|-------|---------|-------------|
-| **🆕 Naive UI Max** | Vu3 + Ts + NaiveUI |  否 | [https://max.naiveadmin.com](https://max.naiveadmin.com) |
-| **Naive UI Plus** | Vu3 + Ts + NaiveUI |  支持Java/PHP | [https://plus.naiveadmin.com](https://plus.naiveadmin.com) |
+迁移现有视频读取工作台能力。第一阶段以本地视频选择、读取、播放和定位为主；后续再根据实际使用补充截图、关键时间点记录、帧分析等功能。具体功能以现有实现和实际工作流程为准，不在本 README 中假定未实现的能力。
 
-## 🔌 前后端版本
+## 技术结构
 
-| 版本 | 技术栈     | 预览地址                                          |
-|------|------------------|--------------------------------------------------------------|
-| **🆕Naive UI Max** | Vu3 + Ts + NaiveUI  |  [https://max-full.naiveadmin.com](https://max-full.naiveadmin.com)    |
-| **Naive UI Plus** | Vu3 + Ts + NaiveUI  |  [https://plus-full.naiveadmin.com](https://plus-full.naiveadmin.com)    |
+- 前端：Vue 3、TypeScript、Vite、Naive UI，基于本仓库已有布局、路由、状态管理和组件。
+- 本地能力：优先复用 `D:\AI_Test\web_tool` 中已有的 Node.js 服务及 ADB/视频处理逻辑，通过本地 HTTP API 与 UI 通信。
+- 运行方式：开发期浏览器访问；桌面打包留待后续决策。
+- 本地数据：设备日志、录屏和视频输出保存在用户指定的本地目录，不上传云端。
 
-## 🏢 多租户版本
+## ADB 使用方式
 
-| 版本           | 技术栈             | 适用场景           | 预览地址                                        |
-|-----------------------------|-----------------------------|----------------|-------------------------------------------|
-| **Vue3**  | Vu3 + Ts + NaiveUI + Java    | 构建企业级 Saas 化系统 | [https://tenant.naiveadmin.com](https://tenant.naiveadmin.com)   |
-| **React** | React + Ts + Ant + Java  | 构建企业级 Saas 化系统       | [https://compose.warden.vip](https://compose.warden.vip)   |
+需要启动两个本地进程。第一个终端启动本地 ADB/文件服务：
 
-
-## 📚 文档
-
-[开源版本文档](https://docs.naiveadmin.com)
-
-## 🛠 准备
-
-- [node](http://nodejs.org/) 和 [git](https://git-scm.com/) -项目开发环境
-- [Vite](https://vitejs.dev/) - 熟悉 vite 特性
-- [Vue3](https://v3.vuejs.org/) - 熟悉 Vue 基础语法
-- [TypeScript](https://www.typescriptlang.org/) - 熟悉`TypeScript`基本语法
-- [Es6+](http://es6.ruanyifeng.com/) - 熟悉 es6 基本语法
-- [Vue-Router-Next](https://next.router.vuejs.org/) - 熟悉 vue-router 基本使用
-- [NaiveUi](https://www.naiveui.com/) - ui 基本使用
-- [Mock.js](https://github.com/nuysoft/Mock) - mockjs 基本语法
-
-
-## 🏗️ 使用
-
-- 获取项目代码
-
-```bash
-git clone https://github.com/jekip/naive-ui-admin.git
+```powershell
+cd D:\AI_Test\Tools
+pnpm service
 ```
 
-- 安装依赖
+第二个终端启动前端：
 
-```bash
-cd naive-ui-admin
-
-pnpm install
-
+```powershell
+cd D:\AI_Test\Tools
+pnpm dev
 ```
 
-- 运行
+浏览器访问 `http://localhost:8001`。服务默认监听 `127.0.0.1:5174`，不要再启动旧目录 `D:\AI_Test\web_tool\server.js`。
 
-```bash
-pnpm run dev
+### ADB 页面操作
+
+- **刷新设备**：执行 `adb devices -l` 并更新设备列表。
+- **读取设备信息**：读取设备 ID、型号、Android 版本、增量版本和桌面版本。
+- **截取屏幕**：保存到 `output/screenshots`，文件名包含设备序列号和时间戳。
+- **开始/停止录屏**：录屏前自动唤醒设备；停止时等待设备正常封装 MP4，确认包含 `moov` 索引后才显示成功。
+- **保存最近视频**：扫描 `/sdcard/DCIM/ScreenRecorder`，选择最新视频并保存到 `output/recordings`。
+- **拉取日志**：向设备发送 284 日志广播，只负责触发生成，不等待。
+- **保存日志**：扫描 `/sdcard/MIUI/debug_log` 中最新的 ZIP/TGZ，并保存到 `output/logs`；本地已有同名文件时不会重复拉取。
+- **命令执行**：命令绑定当前选中的设备，结果显示在操作日志区域。
+
+## 输出目录
+
+```text
+output/
+├── logs/         # 284 日志 ZIP/TGZ
+├── recordings/   # 录屏和设备最近视频
+└── screenshots/  # 设备截图
 ```
 
-- 打包
+媒体文件支持页面预览。复制媒体文件使用 Windows 文件剪贴板，效果等同于在资源管理器中选中文件后按 `Ctrl+C`。
 
-```bash
-pnpm build
+## 已知限制
+
+- 284 日志生成需要设备系统组件完成，广播后可能需要等待较长时间；如果设备没有生成文件，保存日志会提示未找到。
+- 设备息屏时部分系统版本的 `screenrecord` 会返回 `UNASSIGNED_LAYER_STACK`，服务会在录屏前自动尝试唤醒设备。
+- 录屏停止后若设备没有正常封装 MP4，页面不会把损坏文件显示为成功结果。
+- Fastboot、重启和其他可能中断设备连接的操作需要谨慎确认。
+
+## 目录约定
+
+```text
+src/
+├── api/                 # 前端 API 封装
+├── router/modules/      # 菜单与路由
+└── views/               # 工作台和工具页面
+    ├── dashboard/       # 工作台首页
+    ├── adb/             # ADB 设备工具
+    └── video/           # 视频工具
 ```
 
-## 📜 更新日志
+后端服务继续独立管理 ADB 子进程、文件读写和长任务；前端页面不直接访问本机任意文件或执行系统命令。具体目录名可在开始迁移时按仓库现有路由自动加载规则确认。
 
-[CHANGELOG](./CHANGELOG.md)
+## 开发阶段
 
+1. **环境与基线**：安装依赖，运行现有模板，熟悉路由和布局；保留原始模板功能直到新页面可用。
+2. **工作台外壳**：调整产品名称、菜单和首页入口，建立 ADB 与视频工具页面。
+3. **ADB 迁移**：先接设备列表、状态和信息读取，再迁移命令、日志和录屏。
+4. **视频迁移**：将现有视频读取页面嵌入新布局，并验证本地视频访问流程。
+5. **稳定与打包评估**：补充错误提示、运行说明和测试；确认是否需要独立桌面安装包。
 
-## 🤝 如何贡献
+每阶段都应保持已有功能可运行，不因 UI 重构破坏原有 `web_tool`。
 
-非常欢迎你的加入！[提一个 Issue](https://github.com/jekip/naive-ui-admin/issues) 或者提交一个 `Pull Request`
+## 安全与可靠性原则
 
-**Pull Request:**
+- 本地服务默认只监听 `127.0.0.1`。
+- ADB 操作始终指定目标设备序列号。
+- 不从前端直接拼接并执行系统 shell 命令。
+- 对重启、Fastboot 等高影响操作进行确认。
+- 长任务展示运行状态、成功/失败结果和输出文件路径。
+- 日志和录屏采用不会覆盖已有文件的名称。
+- 不上传设备信息、日志或本地视频。
 
-1. Fork 代码!
-2. 创建自己的分支: `git checkout -b feat/xxxx`
-3. 提交你的修改: `git commit -am 'feat(function): add xxxxx'`
-4. 推送您的分支: `git push origin feat/xxxx`
-5. 提交`pull request`
+## 当前状态
 
-## 📋 Git 贡献提交规范
-
-- 参考 [vue](https://github.com/vuejs/vue/blob/dev/.github/COMMIT_CONVENTION.md) 规范 ([Angular](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-angular))
-
-  - `feat` 增加新功能
-  - `fix` 修复问题/BUG
-  - `style` 代码风格相关无影响运行结果的
-  - `perf` 优化/性能提升
-  - `refactor` 重构
-  - `revert` 撤销修改
-  - `test` 测试相关
-  - `docs` 文档/注释
-  - `chore` 依赖更新/脚手架配置修改等
-  - `workflow` 工作流改进
-  - `ci` 持续集成
-  - `types` 类型定义文件更改
-  - `wip` 开发中
-
-## 🌐 浏览器支持
-
-本地开发推荐使用`Chrome 80+` 浏览器
-
-支持现代浏览器, 不支持 IE
-
-| [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt=" Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>IE | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt=" Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Safari |
-| :-: | :-: | :-: | :-: | :-: |
-| not support | last 2 versions | last 2 versions | last 2 versions | last 2 versions |
-
-## 👥 维护者
-[@Ah jung](https://github.com/jekip)
-
-## 💬 交流
-
-有关 `Naive Ui Admin` 的使用或其他问题，可以加入讨论群交流问题
-
-QQ1群：328347666 （已满）
-QQ2群：741353560
-
-## 💖 赞助
-#### 如果项目有帮到你，不妨请作者喝一杯咖啡吧！
-
-![donate](https://assets.naiveadmin.com/assets/images/sponsor.png)
-[Paypal Me](https://www.paypal.com/paypalme/majunping)
+- [x] Naive UI Admin 模板已下载到本目录。
+- [x] 确认本仓库可安装依赖并启动。
+- [x] 根据实际现有页面确定 ADB/视频迁移清单。
+- [x] 完成新的工作台菜单和页面布局。
+- [x] 将 Node.js ADB/视频服务迁移到本项目。
+- [ ] 评估桌面打包方案。

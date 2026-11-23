@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>视频读取工作台</title><link rel="stylesheet" href="/video/style.css"></head>
+<body>
+<header><div><div class="eyebrow">VIDEO WORKSPACE</div><h1>视频读取工作台</h1><p>按世界时间定位视频，边看边记录。</p></div><div class="header-chip">LOCAL · READY</div></header>
+<main>
+<section class="viewer">
+  <div class="video-head"><div><h2 id="videoName">尚未选择视频</h2><p id="videoMeta">选择目录后自动加载最新文件</p></div><span id="videoBadge" class="badge">未加载</span></div>
+  <div class="video-wrap"><video id="video" controls preload="metadata"></video><div id="videoEmpty">选择右侧目录开始播放</div></div>
+  <input id="progress" class="progress" type="range" min="0" max="100" value="0">
+  <div class="transport">
+    <button id="pauseBtn">暂停</button>
+    <button data-skip="-5">↶ 5s</button><button data-skip="-10">↶ 10s</button>
+    <button data-skip="5">5s ↷</button><button data-skip="10">10s ↷</button>
+    <input id="customSkip" type="number" min="1" value="30">
+    <button id="backCustom">后退自定义</button><button id="forwardCustom">前进自定义</button>
+    <span id="currentTime">00:00:00</span>
+  </div>
+</section>
+<aside>
+  <article><div class="card-title"><div><h3>1 · 视频读取</h3><p>默认读取修改时间最近的视频</p></div><span class="step">01</span></div><label>读取路径<input id="folder" value="D:\A_Download"><button id="loadFolder" class="primary">读取目录</button></label><div id="fileList" class="file-list"></div></article>
+  <article><div class="card-title"><div><h3>2 · 原点时间</h3><p>视频 00:00 对应的世界时间</p></div><span class="step">02</span></div><div class="time-fields" data-time="origin"><input id="originH" inputmode="numeric" maxlength="2" placeholder="时"><b>:</b><input id="originM" inputmode="numeric" maxlength="2" placeholder="分"><b>:</b><input id="originS" inputmode="numeric" maxlength="2" placeholder="秒"></div><div class="origin-hint">只需输入数字，0 可省略，按 Enter 进入下一项</div></article>
+  <article><div class="card-title"><div><h3>3 · 时间跳转</h3><p>输入世界时间或视频时间</p></div><span class="step">03</span></div><div class="jump-row"><div class="time-fields" data-time="jump"><input id="jumpH" inputmode="numeric" maxlength="2" placeholder="时"><b>:</b><input id="jumpM" inputmode="numeric" maxlength="2" placeholder="分"><b>:</b><input id="jumpS" inputmode="numeric" maxlength="2" placeholder="秒"></div><select id="jumpMode"><option value="world">世界时间</option><option value="video">视频时间</option></select></div><button id="jumpBtn" class="primary">跳转到时间</button><div id="jumpHint" class="origin-hint"></div></article>
+  <article><div class="card-title"><div><h3>4 · 笔记文档</h3><p>记录观察、时间点与结论</p></div><span class="step">04</span></div><textarea id="notes" placeholder="在这里输入笔记…"></textarea><button id="saveNotes" class="primary">保存笔记</button><span id="saveStatus"></span></article>
+  <article><div class="card-title"><div><h3>5 · 日志解析</h3><p>粘贴日志，自动识别时间戳并跳转</p></div><span class="step">05</span></div><textarea id="logInput" placeholder="粘贴日志内容…"></textarea><button id="parseLog" class="primary">解析日志</button><div id="logHint" class="origin-hint"></div><div id="logTable" class="log-table-wrap"></div></article>
+</aside>
+</main>
+<script src="/video/app.js"></script>
+</body></html>

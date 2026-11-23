@@ -31,6 +31,12 @@ const routes: Array<RouteRecordRaw> = [
         },
         component: () => import('@/views/setting/system/system.vue'),
       },
+      {
+        path: 'adb',
+        name: 'setting-adb',
+        meta: { title: 'ADB 设置' },
+        component: () => import('@/views/setting/system/AdbSetting.vue'),
+      },
     ],
   },
 ];

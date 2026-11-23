@@ -71,6 +71,46 @@ const menuList = () => {
         },
       ],
     },
+    {
+      label: 'Android 工具',
+      key: 'android-tools',
+      type: 1,
+      subtitle: 'android-tools',
+      openType: 1,
+      auth: 'android-tools',
+      path: '/android-tools',
+      children: [
+        {
+          label: 'ADB 设备',
+          key: 'devices',
+          type: 1,
+          subtitle: 'devices',
+          openType: 1,
+          auth: 'devices',
+          path: '/android-tools/devices',
+        },
+      ],
+    },
+    {
+      label: '视频工具',
+      key: 'video-tools',
+      type: 1,
+      subtitle: 'video-tools',
+      openType: 1,
+      auth: 'video-tools',
+      path: '/video-tools',
+      children: [
+        {
+          label: '视频读取',
+          key: 'reader',
+          type: 1,
+          subtitle: 'reader',
+          openType: 1,
+          auth: 'reader',
+          path: '/video-tools/reader',
+        },
+      ],
+    },
   ];
 
   return result;
